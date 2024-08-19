@@ -50,6 +50,7 @@ class PyMochad:
             try:
                 self.socket = socket.socket(af, socktype, proto)
                 self.socket.connect(sa)
+                self.socket.settimeout(1)
             except Exception:
                 continue
             break
@@ -90,6 +91,9 @@ class PyMochad:
                 alt_line_break = six.binary_type("\n\r".encode("utf8"))
                 if data.endswith(line_break) or data.endswith(alt_line_break):
                     break
+            except socket.timeout as t:
+                LOG.info("socket timed out")
+                continue
             except socket.error as e:
                 if e.errno == socket.errno.EWOULDBLOCK:
                     time.sleep(1)
