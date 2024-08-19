@@ -58,7 +58,6 @@ class PyMochad:
             raise exceptions.ConfigurationError(
                 f"Unable to connect to server {self.server}"
             )
-        self.socket.setblocking(0)
 
     def reconnect(self):
         """Reconnect when mochad server is restarted/lost connection."""
