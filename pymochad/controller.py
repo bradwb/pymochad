@@ -91,10 +91,11 @@ class PyMochad:
                 if data.endswith(line_break) or data.endswith(alt_line_break):
                     break
             except socket.timeout as t:
-                LOG.info("socket timed out")
+                LOG.error("socket timed out")
                 continue
             except socket.error as e:
                 if e.errno == socket.errno.EWOULDBLOCK:
+                    LOG.error("socket would block")
                     time.sleep(1)
                     continue
                 else:
